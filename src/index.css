@@ -1,5 +1,21 @@
+@font-face {
+  font-family: 'Dalek Pinpoint';
+  src: local('Dalek Pinpoint'),
+    url('./fonts/DalekPinpointBold.ttf') format('truetype');
+}
+
+* {
+  font-family: 'Dalek Pinpoint';
+}
+
+*::selection {
+  background-color: gold;
+}
+
 body {
   margin: 0;
+  padding: 1rem;
+  background-color: whitesmoke;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

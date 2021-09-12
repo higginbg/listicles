@@ -1,0 +1,41 @@
+.InputContainer {
+  display: flex;
+  gap: 10px;
+
+  input {
+    font-size: 1.5em;
+    width: 100%;
+    border: 2px solid darkgray;
+    padding: 8px 15px;
+    box-shadow: none;
+    border-radius: 7px;
+
+    &:focus {
+      outline: 3px solid gold;
+    }
+  }
+
+  button {
+    font-size: 1.5em;
+    background-color: gold;
+    border: none;
+    border-radius: 7px;
+    padding: 10px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 150ms;
+
+    &:hover {
+      border-color: aquamarine;
+    }
+
+    &:disabled {
+      background-color: lightgray;
+
+      &:hover {
+        border-color: transparent;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
