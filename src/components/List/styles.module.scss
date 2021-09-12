@@ -1,13 +1,15 @@
-.Container {
+.ListContainer {
   margin-top: 3rem;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .List {
   padding: 0;
   border: 1px solid lightgray;
   background-color: white;
-  border-radius: 7px;;
-  
+  border-radius: 7px;
+
   & > li {
     font-size: 1.5em;
     display: flex;

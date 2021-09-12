@@ -23,9 +23,9 @@ const List = () => {
   };
 
   return (
-    <div>
+    <div className={styles.Container}>
       <InputBox addItem={addItem} />
-      <div className={styles.Container}>
+      <div className={styles.ListContainer}>
         {list.length === 0 ? (
           <h3 style={{ textAlign: 'center' }}>No items found. Add some!</h3>
         ) : (
