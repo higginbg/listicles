@@ -7,7 +7,7 @@ interface Props {
   list: Item[];
   onSearch: (query: string) => void;
   onSort: () => void;
-  order: 'asc' | 'desc';
+  order: 'asc' | 'desc' | '';
 }
 
 const SearchBox = ({ list, onSearch, onSort, order }: Props) => {
