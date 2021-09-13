@@ -75,8 +75,8 @@ const List = () => {
   };
 
   const sort = () => {
-    const desc = (a: Item, b: Item) => (a.id < b.id ? 1 : -1);
-    const asc = (a: Item, b: Item) => (a.id > b.id ? 1 : -1);
+    const desc = (a: Item, b: Item) => (a.text < b.text ? 1 : -1);
+    const asc = (a: Item, b: Item) => (a.text > b.text ? 1 : -1);
 
     const sortLists = (sort: (a: Item, b: Item) => number) => {
       setList((list) => list.sort(sort));
