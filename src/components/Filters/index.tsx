@@ -7,9 +7,10 @@ interface Props {
   list: Item[];
   onSearch: (query: string) => void;
   onSort: () => void;
+  order: 'asc' | 'desc';
 }
 
-const SearchBox = ({ list, onSearch, onSort }: Props) => {
+const SearchBox = ({ list, onSearch, onSort, order }: Props) => {
   const [query, setQuery] = useState('');
   const [searchedValue, setSearchedValue] = useState('');
 
@@ -53,6 +54,13 @@ const SearchBox = ({ list, onSearch, onSort }: Props) => {
   const searchDisabled =
     (query === '' && searchedValue === '') || query === searchedValue;
 
+  let sortIcon = 'sort';
+  if (order === 'asc') {
+    sortIcon = 'sort-up';
+  } else if (order === 'desc') {
+    sortIcon = 'sort-down';
+  }
+
   return (
     <form className={styles.Search} onSubmit={handleSubmit}>
       <div className={styles.Input}>
@@ -77,7 +85,7 @@ const SearchBox = ({ list, onSearch, onSort }: Props) => {
       </button>
 
       <button type='button' onClick={onSort} disabled={list.length <= 1}>
-        <i className='fa fa-sort'></i>
+        <i className={`fa fa-${sortIcon}`}></i>
       </button>
     </form>
   );

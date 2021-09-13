@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 const List = () => {
   const [list, setList] = useState([] as Item[]);
   const [filteredList, setFilteredList] = useState(null as Item[] | null);
-  const [sortOrder, setSortOrder] = useState('asc' as 'asc' | 'desc');
+  const [sortOrder, setSortOrder] = useState('' as 'asc' | 'desc' | '');
 
   const addItem = (newItem: string) => {
     setList((prevList) => [
@@ -86,7 +86,7 @@ const List = () => {
     if (sortOrder === 'asc') {
       setSortOrder('desc');
       sortLists(desc);
-    } else if (sortOrder === 'desc') {
+    } else if (sortOrder === '' || sortOrder === 'desc') {
       setSortOrder('asc');
       sortLists(asc);
     }
@@ -108,7 +108,12 @@ const List = () => {
       />
       <div className={styles.ListContainer}>
         {list.length > 0 && (
-          <Filters list={list} onSearch={search} onSort={sort} />
+          <Filters
+            list={list}
+            onSearch={search}
+            onSort={sort}
+            order={sortOrder}
+          />
         )}
         {displayedText && (
           <h3 style={{ textAlign: 'center', padding: '2rem 1rem 3rem 1rem' }}>
