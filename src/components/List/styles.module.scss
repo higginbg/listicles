@@ -2,14 +2,25 @@
   margin-top: 3rem;
   max-height: 500px;
   overflow-y: auto;
+  border-radius: 7px;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+  background-color: white;
+
+  h4 {
+    font-size: 1.5em;
+    margin-bottom: 0.25rem;
+    margin-top: 0.5rem;
+  }
 }
 
 .List {
   clear: both;
   padding: 0;
+  margin-bottom: 0;
   border: 1px solid lightgray;
   background-color: white;
   border-radius: 7px;
+  background-color: whitesmoke;
 
   & > li {
     font-size: 1.5em;
@@ -17,14 +28,17 @@
     justify-content: space-between;
     align-items: center;
     padding-left: 0.75rem;
-    transition: background-color 300ms ease-in-out;
+    transition: background-color 300ms ease-in-out,
+      border-radius 300ms ease-in-out;
 
     & + li {
       border-top: 1px solid lightgray;
     }
 
-    &:hover {
-      background-color: #fffceb;
+    &:hover,
+    &:focus-within {
+      background-color: white;
+      border-radius: 7px;
     }
 
     input {
@@ -70,8 +84,4 @@
       }
     }
   }
-}
-
-.Number {
-  width: 3rem;
 }

@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { Item } from '../../models/Item';
 
+import { Item } from '../../models/Item';
 import InputBox from '../InputBox';
 import ListItem from './ListItem';
+import Filters from '../Filters';
 
 import styles from './styles.module.scss';
 
 const List = () => {
   const [list, setList] = useState([] as Item[]);
+  const [filteredList, setFilteredList] = useState(null as Item[] | null);
+  const [sortOrder, setSortOrder] = useState('asc' as 'asc' | 'desc');
 
   const addItem = (newItem: string) => {
     setList((prevList) => [
@@ -30,6 +33,27 @@ const List = () => {
       const updatedList = prevList.filter((item) => item.id !== id);
       return updatedList;
     });
+
+    setFilteredList((prevList) => {
+      const updatedList = prevList && prevList.filter((item) => item.id !== id);
+      return updatedList;
+    });
+  };
+
+  const search = (query: string) => {
+    if (query === '') {
+      setFilteredList(null);
+      return;
+    }
+
+    const filteredList = list.filter((item) => {
+      const hasTerm = item.text
+        .toLocaleLowerCase()
+        .includes(query.toLocaleLowerCase());
+      return hasTerm;
+    });
+
+    setFilteredList(filteredList);
   };
 
   const changePosition = (index: number, newIndex: number) => {
@@ -50,6 +74,27 @@ const List = () => {
     changePosition(index, index + 1);
   };
 
+  const sort = () => {
+    if (sortOrder === 'asc') {
+      const desc = (a: Item, b: Item) => (a.id < b.id ? 1 : -1);
+      setList((list) => list.sort(desc));
+      setFilteredList((list) => list && list.sort(desc));
+      setSortOrder('desc');
+    } else if (sortOrder === 'desc') {
+      const asc = (a: Item, b: Item) => (a.id > b.id ? 1 : -1);
+      setSortOrder('asc');
+      setList((list) => list.sort(asc));
+      setFilteredList((list) => list && list.sort(asc));
+    }
+  };
+
+  let displayedText = '';
+  if (filteredList && filteredList.length === 0) {
+    displayedText = 'No results found.';
+  } else if (list.length === 0) {
+    displayedText = 'No items added.';
+  }
+
   return (
     <div className={styles.Container}>
       <InputBox
@@ -58,23 +103,33 @@ const List = () => {
         hasItems={list.length > 0}
       />
       <div className={styles.ListContainer}>
-        {list.length === 0 ? (
-          <h3 style={{ textAlign: 'center' }}>No items found. Add some!</h3>
-        ) : (
-          <ul className={styles.List}>
-            {list.map((item) => (
-              <ListItem
-                key={item.id}
-                item={item}
-                index={list.findIndex(({ id }) => item.id === id)}
-                items={list}
-                updateItem={updateItem}
-                deleteItem={deleteItem}
-                moveUp={moveItemUp}
-                moveDown={moveItemDown}
-              />
-            ))}
-          </ul>
+        {list.length > 0 && (
+          <Filters list={list} onSearch={search} onSort={sort} />
+        )}
+        {displayedText && (
+          <h3 style={{ textAlign: 'center', padding: '1rem 3rem' }}>
+            {displayedText}
+          </h3>
+        )}
+        {(filteredList || list).length > 0 && (
+          <div style={{ padding: '1rem' }}>
+            <h4>List items</h4>
+            <ul className={styles.List}>
+              {(filteredList || list).map((item) => (
+                <ListItem
+                  key={item.id}
+                  item={item}
+                  index={list.findIndex(({ id }) => item.id === id)}
+                  items={list}
+                  hasSearchTerm={!!filteredList}
+                  updateItem={updateItem}
+                  deleteItem={deleteItem}
+                  moveUp={moveItemUp}
+                  moveDown={moveItemDown}
+                />
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>

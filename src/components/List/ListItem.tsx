@@ -8,6 +8,7 @@ interface Props {
   item: Item;
   index: number;
   items: Item[];
+  hasSearchTerm: boolean;
   updateItem: (id: string, newText: string) => void;
   deleteItem: (id: string) => void;
   moveUp: (id: string) => void;
@@ -18,6 +19,7 @@ const ListItem = ({
   item,
   index,
   items,
+  hasSearchTerm,
   updateItem,
   deleteItem,
   moveUp,
@@ -42,15 +44,19 @@ const ListItem = ({
     <li>
       <span className={styles.Number}>{index + 1}.</span>
       <input type='text' value={value} onChange={handleChange} />
-      <button onClick={() => moveUp(id)} disabled={index === 0}>
-        <i className='fa fa-caret-up'></i>
-      </button>
-      <button
-        onClick={() => moveDown(id)}
-        disabled={index === items.length - 1}
-      >
-        <i className='fa fa-caret-down'></i>
-      </button>
+      {!hasSearchTerm && (
+        <>
+          <button onClick={() => moveUp(id)} disabled={index === 0}>
+            <i className='fa fa-caret-up'></i>
+          </button>
+          <button
+            onClick={() => moveDown(id)}
+            disabled={index === items.length - 1}
+          >
+            <i className='fa fa-caret-down'></i>
+          </button>
+        </>
+      )}
       <button
         className={styles.Delete}
         title='Delete'

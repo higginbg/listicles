@@ -12,23 +12,10 @@ const InputBox = ({ addItem, deleteAll, hasItems }: Props) => {
   const [value, setValue] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-  const setValueTimeout = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = undefined;
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      setValue('');
-    }, 5000);
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    setValueTimeout();
     if (value.length > 30) {
       return;
     }
@@ -48,6 +35,7 @@ const InputBox = ({ addItem, deleteAll, hasItems }: Props) => {
       <div className={styles.Input}>
         <input
           type='text'
+          placeholder='Add item'
           ref={inputRef}
           value={value}
           onChange={handleChange}
