@@ -1,4 +1,4 @@
 export type Item = {
-  id: Date;
+  id: string;
   text: string;
 };

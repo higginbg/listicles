@@ -4,17 +4,32 @@ import styles from './styles.module.scss';
 
 interface Props {
   addItem: (item: string) => void;
+  deleteAll: () => void;
+  hasItems: boolean;
 }
 
-const InputBox = ({ addItem }: Props) => {
+const InputBox = ({ addItem, deleteAll, hasItems }: Props) => {
   const [value, setValue] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const setValueTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = undefined;
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setValue('');
+    }, 5000);
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    if (value.length > 50) {
+    setValueTimeout();
+    if (value.length > 30) {
       return;
     }
 
@@ -30,9 +45,35 @@ const InputBox = ({ addItem }: Props) => {
 
   return (
     <form className={styles.InputContainer} onSubmit={handleSubmit}>
-      <input type='text' ref={inputRef} value={value} onChange={handleChange} />
-      <button type='submit' disabled={value === ''}>
-        Create
+      <div className={styles.Input}>
+        <input
+          type='text'
+          ref={inputRef}
+          value={value}
+          onChange={handleChange}
+        />
+        {value !== '' && (
+          <button
+            type='button'
+            className={styles.Clear}
+            onClick={() => setValue('')}
+          >
+            <i className='fa fa-times'></i>
+          </button>
+        )}
+      </div>
+
+      <button type='submit' className={styles.Add} disabled={value === ''}>
+        <i className='fa fa-plus'></i>
+      </button>
+
+      <button
+        type='button'
+        className={styles.Delete}
+        onClick={deleteAll}
+        disabled={!hasItems}
+      >
+        <i className='fas fa-meteor'></i>
       </button>
     </form>
   );
