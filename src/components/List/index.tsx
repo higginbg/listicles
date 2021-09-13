@@ -75,16 +75,20 @@ const List = () => {
   };
 
   const sort = () => {
+    const desc = (a: Item, b: Item) => (a.id < b.id ? 1 : -1);
+    const asc = (a: Item, b: Item) => (a.id > b.id ? 1 : -1);
+
+    const sortLists = (sort: (a: Item, b: Item) => number) => {
+      setList((list) => list.sort(sort));
+      setFilteredList((list) => list && list.sort(sort));
+    };
+
     if (sortOrder === 'asc') {
-      const desc = (a: Item, b: Item) => (a.id < b.id ? 1 : -1);
-      setList((list) => list.sort(desc));
-      setFilteredList((list) => list && list.sort(desc));
       setSortOrder('desc');
+      sortLists(desc);
     } else if (sortOrder === 'desc') {
-      const asc = (a: Item, b: Item) => (a.id > b.id ? 1 : -1);
       setSortOrder('asc');
-      setList((list) => list.sort(asc));
-      setFilteredList((list) => list && list.sort(asc));
+      sortLists(asc);
     }
   };
 
@@ -107,7 +111,7 @@ const List = () => {
           <Filters list={list} onSearch={search} onSort={sort} />
         )}
         {displayedText && (
-          <h3 style={{ textAlign: 'center', padding: '1rem 3rem' }}>
+          <h3 style={{ textAlign: 'center', padding: '2rem 1rem 3rem 1rem' }}>
             {displayedText}
           </h3>
         )}

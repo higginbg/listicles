@@ -1,7 +1,5 @@
 .ListContainer {
   margin-top: 3rem;
-  max-height: 500px;
-  overflow-y: auto;
   border-radius: 7px;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
   background-color: white;
@@ -17,6 +15,8 @@
   clear: both;
   padding: 0;
   margin-bottom: 0;
+  max-height: 400px;
+  overflow-y: auto;
   border: 1px solid lightgray;
   background-color: white;
   border-radius: 7px;
