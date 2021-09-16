@@ -116,7 +116,7 @@ const List = () => {
           />
         )}
         {displayedText && (
-          <h3 style={{ textAlign: 'center', padding: '2rem 1rem 3rem 1rem' }}>
+          <h3 style={{ textAlign: 'center', padding: '2rem 1rem' }}>
             {displayedText}
           </h3>
         )}
